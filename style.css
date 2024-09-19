@@ -1,69 +1,58 @@
-﻿/* Chọn một phông chữ thú vị từ Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+* {
+    box-sizing: border-box;
+}
 
-/* Toàn bộ trang dùng phông chữ mới */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
 }
 
-/* Tạo khối chứa và nền xung quanh trang */
 .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
     background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Đổi màu tiêu đề thành màu tươi sáng */
 h1 {
     text-align: center;
-    color: #3498db;
-    font-weight: 600;
+    color: #333;
 }
 
-/* Style cho các nhãn và đầu vào */
+.input-section {
+    margin-bottom: 20px;
+}
+
 label {
     display: block;
     margin-bottom: 5px;
-    color: #2c3e50;
 }
 
 input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
-    border: 2px solid #3498db;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
-    input:focus {
-        border-color: #2ecc71;
-    }
-
-/* Button màu xanh lá cây nổi bật */
 button {
+    display: inline-block;
     padding: 10px 15px;
-    background-color: #2ecc71;
+    background-color: #5cb85c;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
 }
 
-    button:hover {
-        background-color: #27ae60;
-        transform: translateY(-3px);
-    }
+button:hover {
+    background-color: #4cae4c;
+}
 
-/* Bảng kết quả */
 table {
     width: 100%;
     margin-top: 20px;
@@ -77,32 +66,5 @@ th, td {
 }
 
 th {
-    background-color: #3498db;
-    color: white;
+    background-color: #f8f8f8;
 }
-
-td {
-    background-color: #ecf0f1;
-}
-
-/* Hiệu ứng xuất hiện cho bảng */
-#resultTable {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s, transform 0.5s;
-}
-
-    #resultTable.show {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-/* Thêm hiệu ứng cho phần thời gian trung bình */
-#avgTimes {
-    opacity: 0;
-    transition: opacity 0.5s;
-}
-
-    #avgTimes.show {
-        opacity: 1;
-    }
