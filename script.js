@@ -1,70 +1,67 @@
-* {
-    box-sizing: border-box;
+function createInputFields() {
+    const numProcesses = document.getElementById('numProcesses').value;
+    const container = document.getElementById('processInputFields');
+    container.innerHTML = '';
+
+    for (let i = 0; i < numProcesses; i++) {
+        const inputDiv = document.createElement('div');
+        inputDiv.className = 'input-process';
+        inputDiv.innerHTML = `
+            <label for="burst${i}">Burst Time for Process ${i + 1}:</label>
+            <input type="number" id="burst${i}" min="1" value="1">
+        `;
+        container.appendChild(inputDiv);
+    }
+
+    document.getElementById('calculateBtn').style.display = 'block';
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-}
+function calculateSJF() {
+    const numProcesses = document.getElementById('numProcesses').value;
+    let processes = [];
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
+    for (let i = 0; i < numProcesses; i++) {
+        const burstTime = parseInt(document.getElementById(`burst${i}`).value);
+        processes.push({ process: i + 1, burstTime: burstTime });
+    }
 
-h1 {
-    text-align: center;
-    color: #333;
-}
+    processes.sort((a, b) => a.burstTime - b.burstTime);
 
-.input-section {
-    margin-bottom: 20px;
-}
+    let waitingTime = 0;
+    let turnaroundTime = 0;
+    let totalWaitingTime = 0;
+    let totalTurnaroundTime = 0;
 
-label {
-    display: block;
-    margin-bottom: 5px;
-}
+    const tbody = document.querySelector('#resultTable tbody');
+    tbody.innerHTML = '';
 
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+    processes.forEach((p, index) => {
+        if (index === 0) {
+            waitingTime = 0;
+        } else {
+            waitingTime += processes[index - 1].burstTime;
+        }
 
-button {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #5cb85c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+        turnaroundTime = waitingTime + p.burstTime;
+        totalWaitingTime += waitingTime;
+        totalTurnaroundTime += turnaroundTime;
 
-button:hover {
-    background-color: #4cae4c;
-}
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>Process ${p.process}</td>
+            <td>${p.burstTime}</td>
+            <td>${waitingTime}</td>
+            <td>${turnaroundTime}</td>
+        `;
+        tbody.appendChild(row);
+    });
 
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-}
+    document.getElementById('resultTable').style.display = 'table';
 
-th, td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
+    const avgWait = (totalWaitingTime / numProcesses).toFixed(2);
+    const avgTurnaround = (totalTurnaroundTime / numProcesses).toFixed(2);
 
-th {
-    background-color: #f8f8f8;
+    document.getElementById('avgWaitTime').innerText = `Average Waiting Time: ${avgWait}`;
+    document.getElementById('avgTurnaroundTime').innerText = `Average Turnaround Time: ${avgTurnaround}`;
+    document.getElementById('avgTimes').style.display = 'block';
 }
